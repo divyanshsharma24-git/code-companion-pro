@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import ScoreRing from "./ScoreRing";
 import AnalysisPanel from "./AnalysisPanel";
+import FixSuggestions from "./FixSuggestions";
+import CodeChatbot from "./CodeChatbot";
 
 interface Review {
   score: number;
@@ -19,13 +21,16 @@ interface Review {
   complexity: { rating: string; details: string };
   bestPractices: { rating: string; details: string };
   suggestions: string[];
+  fixes?: { issue: string; severity: "critical" | "warning" | "info"; fix: string }[];
 }
 
 interface ReviewDashboardProps {
   review: Review;
+  code: string;
+  language: string;
 }
 
-const ReviewDashboard = ({ review }: ReviewDashboardProps) => {
+const ReviewDashboard = ({ review, code, language }: ReviewDashboardProps) => {
   const panels = [
     { title: "Readability", icon: <Eye className="w-5 h-5" />, ...review.readability },
     { title: "Performance", icon: <Zap className="w-5 h-5" />, ...review.performance },
@@ -57,6 +62,9 @@ const ReviewDashboard = ({ review }: ReviewDashboardProps) => {
         ))}
       </div>
 
+      {/* Suggested Fixes */}
+      <FixSuggestions fixes={review.fixes || []} />
+
       {/* Suggestions */}
       {review.suggestions?.length > 0 && (
         <div
@@ -77,6 +85,9 @@ const ReviewDashboard = ({ review }: ReviewDashboardProps) => {
           </ul>
         </div>
       )}
+
+      {/* AI Chatbot */}
+      <CodeChatbot code={code} language={language} review={review} />
     </div>
   );
 };

@@ -128,7 +128,7 @@ const Index = () => {
           </div>
         ) : (
           <div className="max-w-3xl mx-auto">
-            <ReviewDashboard review={review} />
+            <ReviewDashboard review={review} code={code} language={language} />
           </div>
         )}
       </main>
