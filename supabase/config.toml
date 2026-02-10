@@ -2,3 +2,6 @@ project_id = "tuaewjatrgvgsyyglulo"
 
 [functions.review-code]
 verify_jwt = false
+
+[functions.chat-about-code]
+verify_jwt = false
